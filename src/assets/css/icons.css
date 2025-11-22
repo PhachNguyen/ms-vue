@@ -1,0 +1,242 @@
+.icon-default {
+  background-image: url('../icons/ICON.svg');
+}
+
+.icon {
+  /* Đổi màu */
+  mask-image: url();
+}
+.icon-menu {
+  background-image: url('../icons/icon-setting_2.svg');
+  width: 24px;
+  height: 24px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  margin-right: 16px;
+}
+.logo {
+  background-image: url('../icons/logo.svg');
+  background-repeat: no-repeat;
+  width: 32px;
+  height: 32px;
+  /* margin: 12px; */
+  margin-right: 12px;
+  background-size: contain;
+}
+.icon-search {
+  /* background-image: url('../icons/icon-search.svg'); */
+  background: url('../icons/ICON.svg') no-repeat -1px -658px;
+  width: 18px;
+  height: 18px;
+  /* background-color: aqua; */
+}
+.icon-website {
+  background: url('../icons/ICON.svg') no-repeat 0 -608px;
+  width: 21px;
+  height: 21px;
+  margin: 10px;
+}
+.icon-sound {
+  background-image: url('../icons/icon-sound.svg');
+  width: 24px;
+  height: 24px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  margin-right: 16px;
+}
+.icon-store {
+  background-image: url('../icons/icon-store.svg');
+  width: 24px;
+  height: 24px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  margin-right: 16px;
+}
+.icon-user {
+  background-image: url('../icons/icon-user.svg');
+  width: 24px;
+  height: 24px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  margin-right: 16px;
+}
+.icon-chat {
+  background-image: url('../icons/icon-chat.svg');
+  width: 24px;
+  height: 24px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  margin-right: 16px;
+}
+.icon-noti {
+  background-image: url('../icons/icon-noti.svg');
+  width: 24px;
+  height: 24px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  margin-right: 16px;
+}
+.icon-help {
+  background-image: url('../icons/icon-help.svg');
+  width: 24px;
+  height: 24px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  margin-right: 16px;
+}
+.icon-setting {
+  background-image: url('../icons/icon-setting.svg');
+  width: 24px;
+  height: 24px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  margin-right: 16px;
+}
+.icon-help2 {
+  background-image: url('../icons/icon-help_2.svg');
+  width: 24px;
+  height: 24px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  margin-right: 16px;
+}
+
+.avatar-img {
+  background-image: url('../images/avatar.png');
+  background-repeat: no-repeat;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  margin: 0;
+  background-size: contain;
+}
+/*  Dùng trong sidebar */
+.icon-newpaper {
+  mask: url('../icons/ICON.svg') no-repeat -142px -678px;
+  background-color: aliceblue;
+  width: 16px;
+  height: 16px;
+}
+.icon-user-2 {
+  mask: url('../icons/ICON.svg') no-repeat -202px -698px;
+  background-color: aliceblue;
+  width: 16px;
+  height: 16px;
+}
+.icon-calendar {
+  mask: url('../icons/ICON.svg') no-repeat -342px -678px;
+  background-color: aliceblue;
+  width: 16px;
+  height: 16px;
+}
+.icon-warehouse {
+  mask: url('../icons/ICON.svg') no-repeat -22px -678px;
+  width: 16px;
+  background-color: aliceblue;
+  height: 16px;
+}
+.icon-markerting {
+  mask: url('../icons/ICON.svg') no-repeat -73px -633px;
+  width: 22px;
+  background-color: aliceblue;
+  height: 22px;
+}
+.icon-other {
+  mask: url('../icons/ICON.svg') no-repeat -362px -624px;
+  width: 16px;
+  background-color: aliceblue;
+  height: 4px;
+}
+.icon-job {
+  mask: url('../icons/ICON.svg') no-repeat -256px -635px;
+  width: 14px;
+  background-color: aliceblue;
+  height: 16px;
+}
+.icon-mail {
+  mask: url('../icons/ICON.svg') no-repeat -262px -660px;
+  width: 16px;
+  background-color: aliceblue;
+  height: 13px;
+}
+.icon-chat-sidebar {
+  mask: url('../icons/ICON.svg') no-repeat -75px -847px;
+  width: 18px;
+  background-color: aliceblue;
+  height: 18px;
+}
+.icon-report {
+  mask: url('../icons/ICON.svg') no-repeat -218px -610px;
+  width: 20px;
+  background-color: aliceblue;
+  height: 20px;
+}
+.icon-btn-close {
+  mask: url('../icons/ICON.svg') no-repeat -66px -700px;
+  width: 7px;
+  background-color: aliceblue;
+  height: 12px;
+}
+/* Main content */
+.icon-ai-search {
+  background-image: url('../icons/icon-ai-search.svg');
+  width: 24px;
+  height: 24px;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.icon-plus {
+  mask: url('../icons/ICON.svg') no-repeat -369px -705px;
+  background-color: aliceblue;
+  width: 14px;
+  height: 14px;
+}
+.icon-dropdown {
+  mask: url('../icons/ICON.svg') no-repeat -35px -807px;
+  background-color: aliceblue;
+  width: 13px;
+  height: 7px;
+  /* color: aliceblue; */
+}
+.icon-filter {
+  background: url('../icons/ICON.svg') no-repeat -42px -658px;
+  width: 16px;
+  height: 16px;
+}
+.icon-toolbar {
+  background: url('../icons/ICON.svg') no-repeat -62px -658px;
+  width: 16px;
+  height: 16px;
+}
+.icon-check {
+  background: url('../icons/ICON.svg') no-repeat -4px -849px;
+  width: 17px;
+  height: 15px;
+}
+.icon-setting-2 {
+  background: url('../icons/ICON.svg') no-repeat -102px -678px;
+  width: 16px;
+  height: 16px;
+}
+.icon-left {
+  mask: url('../icons/ICON.svg') no-repeat -66px -700px;
+  background-color: #d0d2d4;
+  width: 7px;
+  height: 12px;
+}
+.icon-pagination {
+  background: url('../icons/ICON.svg') no-repeat -35px -53px;
+  width: 9px;
+  height: 6px;
+}
+.icon-right {
+  background: url('../icons/ICON.svg') no-repeat -46px -700px;
+
+  width: 8px;
+  height: 12px;
+}
+.icon-close {
+  background: url('../icons/ICON.svg') no-repeat -76px -141px;
+  width: 15px;
+  height: 14px;
+}
