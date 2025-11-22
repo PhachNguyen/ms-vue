@@ -57,7 +57,7 @@ function changeMode(mode) {
   <div class="date-mode-wrapper display-flex flex-column">
     <!-- DatePicker -->
     <div class="display-flex justify-content-space-between">
-      <div v-if="props.label" class="date-label">{{ props.label }}</div>
+      <label v-if="props.label" class="date-label">{{ props.label }}</label>
       <div v-if="props.type === 'date'">
         <a-dropdown placement="bottomLeft">
           <a class="mode-btn" @click.prevent> {{ currentLabel }} <DownOutlined /> </a>
@@ -87,6 +87,8 @@ function changeMode(mode) {
   color: #b7b7b7;
 }
 .date-label {
+  font-size: 14px;
+  font-weight: 500;
   color: #374151;
 }
 </style>

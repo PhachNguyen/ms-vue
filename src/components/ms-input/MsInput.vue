@@ -1,74 +1,71 @@
 <script setup>
-// Nhận model từ cha dùng v-model
 const model = defineModel()
-//  Khai báo props
+
 const props = defineProps({
   label: String,
   placeholder: String,
-  type: { type: String, default: 'text' },
+  type: { type: String, default: 'text' }, // text | select
   required: Boolean,
+  options: { type: Array, default: () => [] }, // select options
 })
 </script>
+
 <template>
-  <!-- <div class="display-flex flex-column">
+  <div class="ms-input-wrapper display-flex flex-column">
+    <!-- LABEL -->
+    <label class="label-input">
+      {{ props.label }}
+      <span v-if="props.required" class="required">*</span>
+    </label>
 
-    <label for="" class="label-input"> {{ label }}</label>
+    <!-- INPUT -->
     <input
-    :typle="type"
-    :placeholder="placeholder"
-    class="dx-input"
-    v-model="model"
-    >
-    </input>
+      v-if="props.type !== 'select'"
+      :type="props.type"
+      class="dx-input"
+      :placeholder="props.placeholder"
+      v-model="model"
+    />
 
-  </div> -->
-  <div class="form-group display-flex flex-column">
-    <label class="label-input">{{ label }} <span class="required">*</span></label>
-    <input v-if="type !== 'select'" :type="text" class="dx-input" :placeholder="placeholder" />
+    <!-- SELECT -->
+    <a-select
+      v-else
+      v-model:value="model"
+      :placeholder="props.placeholder"
+      show-search
+      :options="props.options"
+      :filter-option="(input, option) => option.label.toLowerCase().includes(input.toLowerCase())"
+      class="ms-select"
+    />
   </div>
 </template>
 
-<style>
-.form-group {
-  /* display: flex;
-  flex-direction: column; */
-  /* gap: 1px; */
+<style scoped>
+.ms-input-wrapper {
+  width: 100%;
 }
 
-/* Label */
 .label-input {
   font-size: 14px;
   font-weight: 500;
   color: #374151;
+  /* margin-bottom: 6px; */
 }
 
 .required {
   color: #e91e63;
 }
 
-/* 2 cột */
-.form-row {
-  display: flex;
-  gap: 16px;
-}
-
-.form-row .form-group {
-  flex: 1;
-}
-
+/* INPUT STYLE */
 .dx-input {
-  /* Bằng với chiều rộng của wrapper */
-  width: 100%;
-  height: 36px;
+  /* width: 100%; */
+  height: 22px;
   padding: 8px 12px;
-  padding-right: 36px; /* Tạo khoảng cách cho icon */
   border: 1px solid #d0d5dd;
   border-radius: 6px;
   font-size: 14px;
-  background-color: #fff;
   outline: none;
   transition: all 0.15s ease;
-  box-sizing: border-box;
 }
 
 .dx-input:hover {
@@ -77,6 +74,18 @@ const props = defineProps({
 
 .dx-input:focus {
   border-color: #4a90e2;
-  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.25);
+}
+
+/*  */
+.ms-select :deep(.ant-select-selector) {
+  /* height: 36px !important; */
+  display: flex;
+  align-items: center;
+  border-radius: 6px !important;
+}
+
+.ms-select :deep(.ant-select-selection-placeholder) {
+  color: #9ca3af;
 }
 </style>

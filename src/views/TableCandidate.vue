@@ -72,7 +72,7 @@ const fields = [
 
 const count = ref(0)
 //  Giá trị hàng
-const rows = ref(candidate)
+const rows = ref(JSON.parse(localStorage.getItem('candidateList') || '[]'))
 //#endregion
 
 //#endregion

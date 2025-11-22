@@ -8,6 +8,7 @@ import DateModePicker from '@/components/DateModePicker.vue'
 const Props = defineProps({
   isOpen: Boolean,
 })
+
 const emit = defineEmits(['update:isOpen'])
 //  Tạo model
 const model = defineModel()
@@ -21,7 +22,7 @@ const form = reactive({
   dob: null,
   gender: null,
   phone: '',
-  region: '',
+  region: null,
   email: '',
   address: '',
   eduLevel: '',
@@ -36,6 +37,12 @@ const form = reactive({
   startTime: '',
   endTime: '',
 })
+// Gender
+const gender = [
+  { label: 'Nam', value: 'male' },
+  { label: 'Nữ', value: 'female' },
+]
+
 // const rules = {
 //   fullName: [{ required: true, message: 'Không được để trống' }],
 //   gender: [{ required: true, message: 'Vui lòng chọn giới tính' }],
@@ -113,55 +120,59 @@ const form = reactive({
                     <div class="flex1">
                       <date-mode-picker label="Ngày sinh" type="date"></date-mode-picker>
                     </div>
+
                     <div class="form-group">
-                      <a-form-item label="Giới tính" name="gender" class="gender-item">
-                        <a-select
-                          v-model:value="form.gender"
-                          show-search
-                          placeholder="Chọn giới tính"
-                          :filter-option="
-                            (input, option) => {
-                              return option.label.toLowerCase().includes(input.toLowerCase())
-                            }
-                          "
-                          :options="[
-                            { label: 'Nam', value: 'male' },
-                            { label: 'Nữ', value: 'female' },
-                          ]"
-                        />
-                      </a-form-item>
+                      <ms-input
+                        label="Giới tính"
+                        type="select"
+                        v-model="form.gender"
+                        placeholder="Chọn giới tính"
+                        :options="gender"
+                      />
                     </div>
                   </div>
 
                   <!-- Khu vực -->
                   <div class="form-group">
-                    <label class="label-input">Khu vực</label>
-                    <select class="dx-select">
-                      <option hidden>Chọn giá trị</option>
-                      <option>Hà Nội</option>
-                      <option>Hồ Chí Minh</option>
-                      <option>Đà Nẵng</option>
-                    </select>
+                    <ms-input
+                      label="Khu vực"
+                      type="select"
+                      v-model="form.region"
+                      placeholder="Chọn giá trị"
+                      :options="[
+                        { label: 'Nam', value: 'male' },
+                        { label: 'Nữ', value: 'female' },
+                      ]"
+                    />
                   </div>
 
                   <!-- Số điện thoại + Email -->
                   <div class="form-row">
-                    <div class="form-group">
-                      <label class="label-input">Số điện thoại</label>
-                      <input type="text" class="dx-input" placeholder="Nhập số điện thoại" />
-                    </div>
+                    <ms-input
+                      label="Số điện thoại"
+                      name="fullName"
+                      v-model="form.fullName"
+                      placeholder="Nhập số điện thoại"
+                      required
+                    />
 
-                    <div class="form-group">
-                      <label class="label-input">Email</label>
-                      <input type="text" class="dx-input" placeholder="Nhập Email" />
-                    </div>
+                    <ms-input
+                      label="Email"
+                      name="fullName"
+                      v-model="form.fullName"
+                      placeholder="Nhập email"
+                      required
+                    />
                   </div>
 
                   <!-- Địa chỉ -->
-                  <div class="form-group">
-                    <label class="label-input">Địa chỉ</label>
-                    <input type="text" class="dx-input" placeholder="Nhập địa chỉ" />
-                  </div>
+                  <ms-input
+                    label="Địa chỉ"
+                    name="fullName"
+                    v-model="form.address"
+                    placeholder="Nhập địa chỉ"
+                    required
+                  />
 
                   <!-- Học vấn -->
                   <h3 class="section-title">HỌC VẤN</h3>
@@ -211,154 +222,119 @@ const form = reactive({
                       </div>
                     </div>
                   </div>
-                  <!-- ==================== THÊM HỌC VẤN ==================== -->
+                  <!--  THÊM HỌC VẤN  -->
                   <div class="add-title">+ Thêm học vấn</div>
 
-                  <!-- ==================== HÀNG 1 ==================== -->
+                  <!--  HÀNG 1  -->
                   <div class="form-row">
                     <!-- Ngày ứng tuyển -->
-                    <div class="form-group">
-                      <label class="label-input"
-                        >Ngày ứng tuyển <span class="required">*</span></label
-                      >
-                      <div class="dx-input-wrapper">
-                        <input type="text" class="dx-input" value="19/11/2025" />
-                        <i class="fa-regular fa-calendar dx-icon"></i>
-                      </div>
+                    <div class="flex1">
+                      <date-mode-picker label="Ngày ứng tuyển " type="month"></date-mode-picker>
                     </div>
 
                     <!-- Nguồn ứng viên -->
                     <div class="form-group">
-                      <label class="label-input">Nguồn ứng viên</label>
-                      <select class="dx-select">
-                        <option hidden>Chọn nguồn ứng viên</option>
-                        <option>Facebook</option>
-                        <option>Tiktok</option>
-                        <option>Web tuyển dụng</option>
-                      </select>
+                      <ms-input
+                        label="Nguồn ứng viên"
+                        type="select"
+                        v-model="form.region"
+                        placeholder="Chọn giá trị"
+                        :options="[
+                          { label: 'Nam', value: 'male' },
+                          { label: 'Nữ', value: 'female' },
+                        ]"
+                      />
                     </div>
                   </div>
 
-                  <!-- ==================== HÀNG 2 ==================== -->
+                  <!--  HÀNG 2 -->
                   <div class="form-row">
                     <!-- Nhân sự khai thác -->
                     <div class="form-group">
-                      <label class="label-input">Nhân sự khai thác</label>
-                      <select class="dx-select">
-                        <option>Đinh Nga QTHT</option>
-                        <option>Nguyễn An</option>
-                        <option>Phạm Huy</option>
-                      </select>
+                      <ms-input
+                        label="Nhân sự khai thác"
+                        type="select"
+                        v-model="form.region"
+                        placeholder="Chọn giá trị"
+                        :options="[
+                          { label: 'Nam', value: 'male' },
+                          { label: 'Nữ', value: 'female' },
+                        ]"
+                      />
                     </div>
 
                     <!-- Cộng tác viên -->
                     <div class="form-group">
-                      <label class="label-input">Cộng tác viên</label>
-                      <select class="dx-select">
-                        <option hidden>Chọn cộng tác viên</option>
-                        <option>CTV A</option>
-                        <option>CTV B</option>
-                      </select>
+                      <ms-input
+                        label="Cộng tác viên"
+                        type="select"
+                        v-model="form.region"
+                        placeholder="Chọn nguồn ứng viên"
+                        :options="[
+                          { label: 'Nam', value: 'male' },
+                          { label: 'Học sinh', value: 'female' },
+                        ]"
+                      />
                     </div>
                   </div>
 
                   <!-- ==================== CHECKBOX ==================== -->
                   <div class="checkbox-row">
                     <input type="checkbox" id="fastAdd" />
-                    <label for="fastAdd">Thêm nhanh người tham chiếu vào kho ứng viên</label>
+                    <label for="fastAdd" style="font-size: 14px; font-weight: 500; color: #374151"
+                      >Thêm nhanh người tham chiếu vào kho ứng viên</label
+                    >
                   </div>
 
                   <!-- ==================== THÊM NGƯỜI GIỚI THIỆU ==================== -->
                   <div class="add-title">+ Thêm người giới thiệu</div>
 
                   <!-- ==================== INPUT ==================== -->
-                  <div class="form-group">
-                    <label class="label-input">Nơi làm việc gần đây</label>
-                    <input type="text" class="dx-input" placeholder="Nhập nơi làm việc gần đây" />
-                  </div>
-                  <!-- ==================== CHECKBOX ==================== -->
-                  <div class="checkbox-row">
-                    <input type="checkbox" id="refAdd" checked />
-                    <label for="refAdd">Thêm nhanh người tham chiếu vào kho ứng viên</label>
-                  </div>
+                  <ms-input
+                    label="Nơi làm việc gần đây"
+                    name="fullName"
+                    v-model="form.fullName"
+                    placeholder="Nhập nơi làm việc gần đây"
+                    required
+                  />
 
-                  <!-- ==================== THÔNG TIN NGƯỜI THAM CHIẾU ==================== -->
-                  <div class="form-group">
-                    <label class="label-input">Họ và tên <span class="required">*</span></label>
-                    <input type="text" class="dx-input" placeholder="Nhập họ và tên" />
-                  </div>
-
-                  <div class="form-row">
-                    <div class="form-group">
-                      <label class="label-input">Số điện thoại</label>
-                      <input type="text" class="dx-input" placeholder="Nhập số điện thoại" />
-                    </div>
-
-                    <div class="form-group">
-                      <label class="label-input">Email</label>
-                      <input type="text" class="dx-input" placeholder="Nhập Email" />
-                    </div>
-                  </div>
-
-                  <div class="form-row">
-                    <div class="form-group">
-                      <label class="label-input"
-                        >Vị trí công việc <span class="required">*</span></label
-                      >
-                      <input type="text" class="dx-input" placeholder="Nhập vị trí công việc" />
-                    </div>
-
-                    <div class="form-group">
-                      <label class="label-input">Tên công ty <span class="required">*</span></label>
-                      <input type="text" class="dx-input" placeholder="Nhập tên công ty" />
-                    </div>
-                  </div>
-
-                  <!-- ================== THÊM NGƯỜI GIỚI THIỆU ================== -->
-                  <div class="add-title">+ Thêm người giới thiệu</div>
-
-                  <!-- ================== NƠI LÀM VIỆC GẦN ĐÂY ================== -->
-                  <div class="form-group">
-                    <label class="label-input">Nơi làm việc gần đây</label>
-                    <input type="text" class="dx-input" placeholder="Nhập nơi làm việc gần đây" />
-                  </div>
                   <!-- ================== THÊM KINH NGHIỆM ================== -->
                   <hr class="divider-pop-up" />
 
                   <div class="add-title">+ Thêm kinh nghiệm làm việc</div>
 
                   <!-- Nơi làm việc -->
-                  <div class="form-group">
-                    <label class="label-input">Nơi làm việc</label>
-                    <input type="text" class="dx-input" placeholder="Nhập nơi làm việc" />
-                  </div>
+                  <ms-input
+                    label="Nơi làm việc "
+                    name="fullName"
+                    v-model="form.fullName"
+                    placeholder="Nhập nơi làm việc "
+                    required
+                  />
 
                   <!-- Thời gian -->
-                  <div class="form-row">
+                  <div
+                    class="form-row display-flex justify-content-space-between align-items-center"
+                  >
                     <!-- Từ -->
-                    <div class="form-group">
-                      <label class="label-input">Thời gian</label>
-                      <div class="input-wrapper">
-                        <input type="text" class="dx-input" placeholder="MM/yyyy" />
-                        <i class="fa-regular fa-calendar input-icon"></i>
-                      </div>
+                    <div class="flex1">
+                      <date-mode-picker label="Thời gian " type="month"></date-mode-picker>
                     </div>
 
                     <!-- Đến -->
-                    <div class="form-group end-date">
-                      <label class="label-input" style="visibility: hidden">Đến</label>
-                      <div class="input-wrapper">
-                        <input type="text" class="dx-input" placeholder="MM/yyyy" />
-                        <i class="fa-regular fa-calendar input-icon"></i>
-                      </div>
+                    <div class="flex1">
+                      <date-mode-picker label=". " type="month"></date-mode-picker>
                     </div>
                   </div>
 
                   <!-- Vị trí công việc -->
-                  <div class="form-group">
-                    <label class="label-input">Vị trí công việc</label>
-                    <input type="text" class="dx-input" placeholder="Nhập vị trí công việc" />
-                  </div>
+                  <ms-input
+                    label="Vị trí công việc "
+                    name="fullName"
+                    v-model="form.fullName"
+                    placeholder="Nhập vị trí công việc "
+                    required
+                  />
 
                   <!-- Mô tả -->
                   <div class="form-group">
@@ -393,7 +369,7 @@ const form = reactive({
 .gender-item :deep(.ant-form-item-label) {
   /* padding-bottom: 4px; */
   text-align: left !important;
-  width: 100%;
+  /* width: 100%; */
 }
 .gender-item :deep(.ant-form-item-label > label) {
   font-size: 14px;
