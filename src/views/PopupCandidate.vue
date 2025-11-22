@@ -2,6 +2,7 @@
 <script setup>
 import { reactive, ref, watch } from 'vue'
 import MsInput from '@/components/ms-input/MsInput.vue'
+import DateModePicker from '@/components/DateModePicker.vue'
 
 //  Init một Props
 const Props = defineProps({
@@ -12,7 +13,7 @@ const emit = defineEmits(['update:isOpen'])
 const model = defineModel()
 
 function closeClick() {
-  debugger
+  // debugger
   model.value = false
 }
 const form = reactive({
@@ -35,11 +36,11 @@ const form = reactive({
   startTime: '',
   endTime: '',
 })
-const rules = {
-  fullName: [{ required: true, message: 'Không được để trống' }],
-  gender: [{ required: true, message: 'Vui lòng chọn giới tính' }],
-  phone: [{ required: true, message: 'Không được để trống' }],
-}
+// const rules = {
+//   fullName: [{ required: true, message: 'Không được để trống' }],
+//   gender: [{ required: true, message: 'Vui lòng chọn giới tính' }],
+//   phone: [{ required: true, message: 'Không được để trống' }],
+// }
 </script>
 <template>
   <div class="model">
@@ -57,6 +58,7 @@ const rules = {
           <div class="icon-close" id="closeModal" @click="closeClick"></div>
         </div>
         <!-- Content -->
+
         <div class="modal-content display-flex flex-column">
           <!-- Upload popup -->
           <div
@@ -89,288 +91,286 @@ const rules = {
               </div>
             </div>
             <!-- Content-right -->
-            <div class="modal-content-right flex1">
-              <div class="form-container display-flex flex-column">
-                <!-- Họ tên -->
-                <!-- Họ và tên -->
-                <a-form-item label="Họ và tên" name="fullName" required>
-                  <a-input v-model:value="form.fullName" placeholder="Nhập họ và tên" />
-                </a-form-item>
-                <!-- Row Ngày sinh & Giới tính -->
-                <div class="form-row">
-                  <!-- Nhóm label và icon -->
-                  <div class="form-group">
-                    <div class="display-flex justify-content-space-between">
-                      <label class="label-input">Ngày sinh</label>
-                      <!-- <label class="sub-input"> Ngày tháng năm</label> -->
-                      <!-- <div class="icon-dropdown"></div> -->
+            <a-form :model="form" :rules="rules">
+              <div class="modal-content-right flex1">
+                <div class="form-container display-flex flex-column">
+                  <!-- Họ tên -->
+                  <!-- Họ và tên -->
+                  <ms-input
+                    label="Họ và tên"
+                    name="fullName"
+                    v-model="form.fullName"
+                    placeholder="Nhập họ và tên"
+                    required
+                  />
+
+                  <!-- Row Ngày sinh & Giới tính -->
+                  <div
+                    class="form-row display-flex flex-row justify-content-center align-items-center"
+                  >
+                    <!-- Nhóm label và icon -->
+                    <!-- <label for="">Ngày sinh</label> -->
+                    <div class="flex1">
+                      <date-mode-picker label="Ngày sinh" type="date"></date-mode-picker>
                     </div>
-                    <!-- <ms-input  label :Ngày -->
-
-                    <!-- Bọc input và icon -->
-                    <div class="dx-input-wrapper">
-                      <input type="text" class="dx-input" placeholder="dd/MM/yyyy" />
-                      <i class="fa-regular fa-calendar dx-icon"></i>
-                    </div>
-                    <!--  -->
-                  </div>
-
-                  <div class="form-group">
-                    <a-form-item label="Giới tính" name="gender">
-                      <a-select
-                        v-model:value="form.gender"
-                        show-search
-                        placeholder="Chọn giới tính"
-                        :filter-option="
-                          (input, option) => {
-                            return option.label.toLowerCase().includes(input.toLowerCase())
-                          }
-                        "
-                        :options="[
-                          { label: 'Nam', value: 'male' },
-                          { label: 'Nữ', value: 'female' },
-                        ]"
-                      />
-                    </a-form-item>
-                  </div>
-                </div>
-
-                <!-- Khu vực -->
-                <div class="form-group">
-                  <label class="label-input">Khu vực</label>
-                  <select class="dx-select">
-                    <option hidden>Chọn giá trị</option>
-                    <option>Hà Nội</option>
-                    <option>Hồ Chí Minh</option>
-                    <option>Đà Nẵng</option>
-                  </select>
-                </div>
-
-                <!-- Số điện thoại + Email -->
-                <div class="form-row">
-                  <div class="form-group">
-                    <label class="label-input">Số điện thoại</label>
-                    <input type="text" class="dx-input" placeholder="Nhập số điện thoại" />
-                  </div>
-
-                  <div class="form-group">
-                    <label class="label-input">Email</label>
-                    <input type="text" class="dx-input" placeholder="Nhập Email" />
-                  </div>
-                </div>
-
-                <!-- Địa chỉ -->
-                <div class="form-group">
-                  <label class="label-input">Địa chỉ</label>
-                  <input type="text" class="dx-input" placeholder="Nhập địa chỉ" />
-                </div>
-
-                <!-- Học vấn -->
-                <h3 class="section-title">HỌC VẤN</h3>
-
-                <div class="form-group">
-                  <div class="education-list">
-                    <!-- Một dòng -->
-                    <div class="edu-row">
-                      <div class="left">
-                        <div class="icon-dot"></div>
-                        <span>Trình độ đào tạo</span>
-                      </div>
-
-                      <div class="input-wrapper">
-                        <input type="text" class="dx-input" placeholder="Nhập trình độ đào tạo" />
-                        <i class="fa-solid fa-plus icon-plus"></i>
-                        <i class="fa-solid fa-chevron-down icon-dropdown-education"></i>
-                      </div>
-                    </div>
-
-                    <!-- dòng 2 -->
-                    <div class="edu-row">
-                      <div class="left">
-                        <div class="icon-dot"></div>
-                        <span>Nơi đào tạo</span>
-                      </div>
-
-                      <div class="input-wrapper">
-                        <input type="text" class="dx-input" placeholder="Nhập nơi đào tạo" />
-                        <i class="fa-solid fa-plus icon-plus"></i>
-                        <i class="fa-solid fa-chevron-down icon-dropdown-education"></i>
-                      </div>
-                    </div>
-
-                    <!-- dòng 3 -->
-                    <div class="edu-row">
-                      <div class="left">
-                        <div class="icon-dot"></div>
-                        <span>Chuyên ngành</span>
-                      </div>
-
-                      <div class="input-wrapper">
-                        <input type="text" class="dx-input" placeholder="Nhập chuyên ngành" />
-                        <i class="fa-solid fa-plus icon-plus"></i>
-                        <i class="fa-solid fa-chevron-down icon-dropdown-education"></i>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <!-- ==================== THÊM HỌC VẤN ==================== -->
-                <div class="add-title">+ Thêm học vấn</div>
-
-                <!-- ==================== HÀNG 1 ==================== -->
-                <div class="form-row">
-                  <!-- Ngày ứng tuyển -->
-                  <div class="form-group">
-                    <label class="label-input"
-                      >Ngày ứng tuyển <span class="required">*</span></label
-                    >
-                    <div class="dx-input-wrapper">
-                      <input type="text" class="dx-input" value="19/11/2025" />
-                      <i class="fa-regular fa-calendar dx-icon"></i>
+                    <div class="form-group">
+                      <a-form-item label="Giới tính" name="gender" class="gender-item">
+                        <a-select
+                          v-model:value="form.gender"
+                          show-search
+                          placeholder="Chọn giới tính"
+                          :filter-option="
+                            (input, option) => {
+                              return option.label.toLowerCase().includes(input.toLowerCase())
+                            }
+                          "
+                          :options="[
+                            { label: 'Nam', value: 'male' },
+                            { label: 'Nữ', value: 'female' },
+                          ]"
+                        />
+                      </a-form-item>
                     </div>
                   </div>
 
-                  <!-- Nguồn ứng viên -->
+                  <!-- Khu vực -->
                   <div class="form-group">
-                    <label class="label-input">Nguồn ứng viên</label>
+                    <label class="label-input">Khu vực</label>
                     <select class="dx-select">
-                      <option hidden>Chọn nguồn ứng viên</option>
-                      <option>Facebook</option>
-                      <option>Tiktok</option>
-                      <option>Web tuyển dụng</option>
-                    </select>
-                  </div>
-                </div>
-
-                <!-- ==================== HÀNG 2 ==================== -->
-                <div class="form-row">
-                  <!-- Nhân sự khai thác -->
-                  <div class="form-group">
-                    <label class="label-input">Nhân sự khai thác</label>
-                    <select class="dx-select">
-                      <option>Đinh Nga QTHT</option>
-                      <option>Nguyễn An</option>
-                      <option>Phạm Huy</option>
+                      <option hidden>Chọn giá trị</option>
+                      <option>Hà Nội</option>
+                      <option>Hồ Chí Minh</option>
+                      <option>Đà Nẵng</option>
                     </select>
                   </div>
 
-                  <!-- Cộng tác viên -->
-                  <div class="form-group">
-                    <label class="label-input">Cộng tác viên</label>
-                    <select class="dx-select">
-                      <option hidden>Chọn cộng tác viên</option>
-                      <option>CTV A</option>
-                      <option>CTV B</option>
-                    </select>
-                  </div>
-                </div>
+                  <!-- Số điện thoại + Email -->
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label class="label-input">Số điện thoại</label>
+                      <input type="text" class="dx-input" placeholder="Nhập số điện thoại" />
+                    </div>
 
-                <!-- ==================== CHECKBOX ==================== -->
-                <div class="checkbox-row">
-                  <input type="checkbox" id="fastAdd" />
-                  <label for="fastAdd">Thêm nhanh người tham chiếu vào kho ứng viên</label>
-                </div>
-
-                <!-- ==================== THÊM NGƯỜI GIỚI THIỆU ==================== -->
-                <div class="add-title">+ Thêm người giới thiệu</div>
-
-                <!-- ==================== INPUT ==================== -->
-                <div class="form-group">
-                  <label class="label-input">Nơi làm việc gần đây</label>
-                  <input type="text" class="dx-input" placeholder="Nhập nơi làm việc gần đây" />
-                </div>
-                <!-- ==================== CHECKBOX ==================== -->
-                <div class="checkbox-row">
-                  <input type="checkbox" id="refAdd" checked />
-                  <label for="refAdd">Thêm nhanh người tham chiếu vào kho ứng viên</label>
-                </div>
-
-                <!-- ==================== THÔNG TIN NGƯỜI THAM CHIẾU ==================== -->
-                <div class="form-group">
-                  <label class="label-input">Họ và tên <span class="required">*</span></label>
-                  <input type="text" class="dx-input" placeholder="Nhập họ và tên" />
-                </div>
-
-                <div class="form-row">
-                  <div class="form-group">
-                    <label class="label-input">Số điện thoại</label>
-                    <input type="text" class="dx-input" placeholder="Nhập số điện thoại" />
+                    <div class="form-group">
+                      <label class="label-input">Email</label>
+                      <input type="text" class="dx-input" placeholder="Nhập Email" />
+                    </div>
                   </div>
 
+                  <!-- Địa chỉ -->
                   <div class="form-group">
-                    <label class="label-input">Email</label>
-                    <input type="text" class="dx-input" placeholder="Nhập Email" />
+                    <label class="label-input">Địa chỉ</label>
+                    <input type="text" class="dx-input" placeholder="Nhập địa chỉ" />
                   </div>
-                </div>
 
-                <div class="form-row">
+                  <!-- Học vấn -->
+                  <h3 class="section-title">HỌC VẤN</h3>
+
                   <div class="form-group">
-                    <label class="label-input"
-                      >Vị trí công việc <span class="required">*</span></label
-                    >
+                    <div class="education-list">
+                      <!-- Một dòng -->
+                      <div class="edu-row">
+                        <div class="left">
+                          <div class="icon-dot"></div>
+                          <span>Trình độ đào tạo</span>
+                        </div>
+
+                        <div class="input-wrapper">
+                          <input type="text" class="dx-input" placeholder="Nhập trình độ đào tạo" />
+                          <i class="fa-solid fa-plus icon-plus"></i>
+                          <i class="fa-solid fa-chevron-down icon-dropdown-education"></i>
+                        </div>
+                      </div>
+
+                      <!-- dòng 2 -->
+                      <div class="edu-row">
+                        <div class="left">
+                          <div class="icon-dot"></div>
+                          <span>Nơi đào tạo</span>
+                        </div>
+
+                        <div class="input-wrapper">
+                          <input type="text" class="dx-input" placeholder="Nhập nơi đào tạo" />
+                          <i class="fa-solid fa-plus icon-plus"></i>
+                          <i class="fa-solid fa-chevron-down icon-dropdown-education"></i>
+                        </div>
+                      </div>
+
+                      <!-- dòng 3 -->
+                      <div class="edu-row">
+                        <div class="left">
+                          <div class="icon-dot"></div>
+                          <span>Chuyên ngành</span>
+                        </div>
+
+                        <div class="input-wrapper">
+                          <input type="text" class="dx-input" placeholder="Nhập chuyên ngành" />
+                          <i class="fa-solid fa-plus icon-plus"></i>
+                          <i class="fa-solid fa-chevron-down icon-dropdown-education"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- ==================== THÊM HỌC VẤN ==================== -->
+                  <div class="add-title">+ Thêm học vấn</div>
+
+                  <!-- ==================== HÀNG 1 ==================== -->
+                  <div class="form-row">
+                    <!-- Ngày ứng tuyển -->
+                    <div class="form-group">
+                      <label class="label-input"
+                        >Ngày ứng tuyển <span class="required">*</span></label
+                      >
+                      <div class="dx-input-wrapper">
+                        <input type="text" class="dx-input" value="19/11/2025" />
+                        <i class="fa-regular fa-calendar dx-icon"></i>
+                      </div>
+                    </div>
+
+                    <!-- Nguồn ứng viên -->
+                    <div class="form-group">
+                      <label class="label-input">Nguồn ứng viên</label>
+                      <select class="dx-select">
+                        <option hidden>Chọn nguồn ứng viên</option>
+                        <option>Facebook</option>
+                        <option>Tiktok</option>
+                        <option>Web tuyển dụng</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <!-- ==================== HÀNG 2 ==================== -->
+                  <div class="form-row">
+                    <!-- Nhân sự khai thác -->
+                    <div class="form-group">
+                      <label class="label-input">Nhân sự khai thác</label>
+                      <select class="dx-select">
+                        <option>Đinh Nga QTHT</option>
+                        <option>Nguyễn An</option>
+                        <option>Phạm Huy</option>
+                      </select>
+                    </div>
+
+                    <!-- Cộng tác viên -->
+                    <div class="form-group">
+                      <label class="label-input">Cộng tác viên</label>
+                      <select class="dx-select">
+                        <option hidden>Chọn cộng tác viên</option>
+                        <option>CTV A</option>
+                        <option>CTV B</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <!-- ==================== CHECKBOX ==================== -->
+                  <div class="checkbox-row">
+                    <input type="checkbox" id="fastAdd" />
+                    <label for="fastAdd">Thêm nhanh người tham chiếu vào kho ứng viên</label>
+                  </div>
+
+                  <!-- ==================== THÊM NGƯỜI GIỚI THIỆU ==================== -->
+                  <div class="add-title">+ Thêm người giới thiệu</div>
+
+                  <!-- ==================== INPUT ==================== -->
+                  <div class="form-group">
+                    <label class="label-input">Nơi làm việc gần đây</label>
+                    <input type="text" class="dx-input" placeholder="Nhập nơi làm việc gần đây" />
+                  </div>
+                  <!-- ==================== CHECKBOX ==================== -->
+                  <div class="checkbox-row">
+                    <input type="checkbox" id="refAdd" checked />
+                    <label for="refAdd">Thêm nhanh người tham chiếu vào kho ứng viên</label>
+                  </div>
+
+                  <!-- ==================== THÔNG TIN NGƯỜI THAM CHIẾU ==================== -->
+                  <div class="form-group">
+                    <label class="label-input">Họ và tên <span class="required">*</span></label>
+                    <input type="text" class="dx-input" placeholder="Nhập họ và tên" />
+                  </div>
+
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label class="label-input">Số điện thoại</label>
+                      <input type="text" class="dx-input" placeholder="Nhập số điện thoại" />
+                    </div>
+
+                    <div class="form-group">
+                      <label class="label-input">Email</label>
+                      <input type="text" class="dx-input" placeholder="Nhập Email" />
+                    </div>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label class="label-input"
+                        >Vị trí công việc <span class="required">*</span></label
+                      >
+                      <input type="text" class="dx-input" placeholder="Nhập vị trí công việc" />
+                    </div>
+
+                    <div class="form-group">
+                      <label class="label-input">Tên công ty <span class="required">*</span></label>
+                      <input type="text" class="dx-input" placeholder="Nhập tên công ty" />
+                    </div>
+                  </div>
+
+                  <!-- ================== THÊM NGƯỜI GIỚI THIỆU ================== -->
+                  <div class="add-title">+ Thêm người giới thiệu</div>
+
+                  <!-- ================== NƠI LÀM VIỆC GẦN ĐÂY ================== -->
+                  <div class="form-group">
+                    <label class="label-input">Nơi làm việc gần đây</label>
+                    <input type="text" class="dx-input" placeholder="Nhập nơi làm việc gần đây" />
+                  </div>
+                  <!-- ================== THÊM KINH NGHIỆM ================== -->
+                  <hr class="divider-pop-up" />
+
+                  <div class="add-title">+ Thêm kinh nghiệm làm việc</div>
+
+                  <!-- Nơi làm việc -->
+                  <div class="form-group">
+                    <label class="label-input">Nơi làm việc</label>
+                    <input type="text" class="dx-input" placeholder="Nhập nơi làm việc" />
+                  </div>
+
+                  <!-- Thời gian -->
+                  <div class="form-row">
+                    <!-- Từ -->
+                    <div class="form-group">
+                      <label class="label-input">Thời gian</label>
+                      <div class="input-wrapper">
+                        <input type="text" class="dx-input" placeholder="MM/yyyy" />
+                        <i class="fa-regular fa-calendar input-icon"></i>
+                      </div>
+                    </div>
+
+                    <!-- Đến -->
+                    <div class="form-group end-date">
+                      <label class="label-input" style="visibility: hidden">Đến</label>
+                      <div class="input-wrapper">
+                        <input type="text" class="dx-input" placeholder="MM/yyyy" />
+                        <i class="fa-regular fa-calendar input-icon"></i>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Vị trí công việc -->
+                  <div class="form-group">
+                    <label class="label-input">Vị trí công việc</label>
                     <input type="text" class="dx-input" placeholder="Nhập vị trí công việc" />
                   </div>
 
+                  <!-- Mô tả -->
                   <div class="form-group">
-                    <label class="label-input">Tên công ty <span class="required">*</span></label>
-                    <input type="text" class="dx-input" placeholder="Nhập tên công ty" />
+                    <label class="label-input">Mô tả công việc</label>
+                    <textarea class="dx-textarea" placeholder="Nhập mô tả công việc"></textarea>
                   </div>
-                </div>
-
-                <!-- ================== THÊM NGƯỜI GIỚI THIỆU ================== -->
-                <div class="add-title">+ Thêm người giới thiệu</div>
-
-                <!-- ================== NƠI LÀM VIỆC GẦN ĐÂY ================== -->
-                <div class="form-group">
-                  <label class="label-input">Nơi làm việc gần đây</label>
-                  <input type="text" class="dx-input" placeholder="Nhập nơi làm việc gần đây" />
-                </div>
-                <!-- ================== THÊM KINH NGHIỆM ================== -->
-                <hr class="divider-pop-up" />
-
-                <div class="add-title">+ Thêm kinh nghiệm làm việc</div>
-
-                <!-- Nơi làm việc -->
-                <div class="form-group">
-                  <label class="label-input">Nơi làm việc</label>
-                  <input type="text" class="dx-input" placeholder="Nhập nơi làm việc" />
-                </div>
-
-                <!-- Thời gian -->
-                <div class="form-row">
-                  <!-- Từ -->
-                  <div class="form-group">
-                    <label class="label-input">Thời gian</label>
-                    <div class="input-wrapper">
-                      <input type="text" class="dx-input" placeholder="MM/yyyy" />
-                      <i class="fa-regular fa-calendar input-icon"></i>
-                    </div>
-                  </div>
-
-                  <!-- Đến -->
-                  <div class="form-group end-date">
-                    <label class="label-input" style="visibility: hidden">Đến</label>
-                    <div class="input-wrapper">
-                      <input type="text" class="dx-input" placeholder="MM/yyyy" />
-                      <i class="fa-regular fa-calendar input-icon"></i>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Vị trí công việc -->
-                <div class="form-group">
-                  <label class="label-input">Vị trí công việc</label>
-                  <input type="text" class="dx-input" placeholder="Nhập vị trí công việc" />
-                </div>
-
-                <!-- Mô tả -->
-                <div class="form-group">
-                  <label class="label-input">Mô tả công việc</label>
-                  <textarea class="dx-textarea" placeholder="Nhập mô tả công việc"></textarea>
                 </div>
               </div>
-            </div>
+            </a-form>
           </div>
         </div>
+
         <!-- BUTTON FOOTER -->
         <div class="modal-footer">
           <button type="button" class="btn-cancel">Hủy</button>
@@ -382,6 +382,35 @@ const rules = {
 </template>
 
 <style scoped>
+/* Label */
+.gender-item :deep(.ant-form-item-row) {
+  display: flex !important;
+  flex-direction: column !important;
+  /* align-items: flex-start; */
+}
+
+/* Optional: chỉnh label nằm trên */
+.gender-item :deep(.ant-form-item-label) {
+  /* padding-bottom: 4px; */
+  text-align: left !important;
+  width: 100%;
+}
+.gender-item :deep(.ant-form-item-label > label) {
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+}
+
+.gender-item :deep(.ant-select-selector) {
+  height: 36px !important;
+  border-radius: 6px !important;
+  padding-left: 12px !important;
+}
+
+.gender-item :deep(.ant-select-selection-placeholder) {
+  color: #9ca3af !important;
+}
+
 /* Overlay */
 /*  Ban đầu overlay sẽ hiển thị */
 .overlay {

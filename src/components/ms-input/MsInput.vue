@@ -38,6 +38,7 @@ const props = defineProps({
 /* Label */
 .label-input {
   font-size: 14px;
+  font-weight: 500;
   color: #374151;
 }
 
