@@ -3,12 +3,13 @@
     <div class="table-wrapper">
       <div class="ms-table">
         <table>
+          <!-- Header -->
           <thead>
             <!-- Dùng for truyền các fields vào header table -->
             <tr>
-              <div class="btn-checkbox header display-flex align-items-center">
+              <th class="btn-checkbox header display-flex align-items-center">
                 <input class="btn-check" type="checkbox" />
-              </div>
+              </th>
               <th v-for="field in fields" :key="field.key">{{ field.label }}</th>
               <!-- <slot :name="'Header-' + field.key"> {{ field.label }} </slot> -->
             </tr>
@@ -16,13 +17,15 @@
           <tbody>
             <!-- For dùng để chạy một hàng  -->
             <tr v-for="(row, rowIndex) in rows" :key="rowIndex" class="table-row">
+              <!-- <h1>{{ rowIndex }}</h1> -->
               <!--  Tạo ra một slot để custom lại cái header checkbox -->
               <!--  Đặt name theo key -->
-              <div class="btn-checkbox display-flex align-items-center">
+              <td class="btn-checkbox">
                 <input class="btn-check" type="checkbox" />
-              </div>
+              </td>
               <!-- Sau khi chạy mỗi hàng xong thì vừa chạy hàng for column -->
               <td v-for="field in fields" :key="field.key">
+                <!-- Render khi vào column custom  -->
                 <!-- Custom type with slot -->
                 <template v-if="field.type === 'custom'">
                   <!--  Định nghĩa biến slot -->
@@ -44,6 +47,27 @@
             </tr>
           </tbody>
         </table>
+      </div>
+    </div>
+    <div
+      class="main-content-bottom display-flex flex-row justify-content-space-between align-items-center"
+    >
+      <div class="total">
+        Tổng: <span style="font-weight: 700">{{ total }}</span> bản ghi
+      </div>
+      <div
+        class="bottom-right display-flex justify-content-space-between align-items-center flex-row"
+      >
+        <span class="title-pagination">Số bản ghi/trang</span>
+        <div class="pagination display-flex flex-row align-items-center">
+          <span style="padding-right: 8px">25</span>
+          <div class="icon-pagination"></div>
+        </div>
+        <div class="number-pagination display-flex">
+          <span style="padding-left: 6px">1 <span style="padding: 5px">-</span> 25 bàn ghi </span>
+          <div class="icon-left"></div>
+          <div class="icon-right"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -72,6 +96,10 @@ const props = defineProps({
     type: Array,
     required: true,
   },
+  total: {
+    type: Number,
+    default: 0,
+  },
 })
 //#endregion
 
@@ -88,18 +116,15 @@ const emit = defineEmits(['edit', 'delete'])
  * createdby: pdthien - 15.10.2025
  */
 const handleFormat = (value, type) => {
-  if (value === null || value === undefined) return ''
-
-  // Nếu array → join cho đẹp
-  if (Array.isArray(value)) return value.join(', ')
-
   switch (type) {
     case 'number':
-      return Number(value).toLocaleString('vi-VN')
+      return formatNumber(value)
     case 'date':
-      return new Date(value).toLocaleDateString('vi-VN')
+      return formatDate(value)
+    case 'text':
+      return formatText(value)
     default:
-      return String(value)
+      return formatText(value)
   }
 }
 // Handle click lưu hết all
@@ -128,7 +153,7 @@ const handleDelete = (row) => {
 /* TABLE  */
 /* Vùng table trong trang */
 .main-content-table {
-  height: 95%;
+  /* height: 15%; */
   margin-top: 16px;
   padding: 0 24px;
 }
@@ -142,7 +167,8 @@ const handleDelete = (row) => {
 .table-wrapper {
   overflow: auto;
   width: 100%;
-  height: 100%;
+  height: 430px; /* chiều cao trừ phần bottom */
+  flex: 1;
   border-radius: 6px;
 }
 
@@ -178,24 +204,12 @@ const handleDelete = (row) => {
   height: 16px;
 }
 
-/* Tên + Avatar */
 .cell-name {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.avatar {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  color: white;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 13px;
-}
 .table-row {
   position: relative;
 }
@@ -252,5 +266,37 @@ const handleDelete = (row) => {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.main-content-bottom {
+  font-size: 14px;
+  /* height: 36px; */
+
+  padding: 12px;
+  background-color: #f5f5f5;
+  color: #394856;
+}
+.main-content-bottom .total {
+  font-weight: 700px;
+}
+.main-content-bottom .pagination {
+  padding: 7px 16px;
+  border: 0.8px;
+  background-color: #ffffff;
+}
+.main-content-bottom .title-pagination {
+  margin-right: 13px;
+  /* margin-top: 9px; */
+  font-size: 14px;
+  font-weight: 400px;
+  /* border: 1px solid gray; */
+}
+.main-content-bottom .number-pagination {
+  /* margin-top: 2px; */
+}
+.main-content-bottom .icon-dropdown {
+}
+.main-content-bottom .icon-left {
+  margin-left: 16px;
+  padding-right: 7px;
 }
 </style>

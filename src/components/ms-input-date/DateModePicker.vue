@@ -2,7 +2,7 @@
 import { ref, watch } from 'vue'
 import { DownOutlined } from '@ant-design/icons-vue'
 
-// 🟦 Props tái sử dụng
+//  Props tái sử dụng
 const props = defineProps({
   label: String,
   type: {
@@ -12,16 +12,16 @@ const props = defineProps({
   },
 })
 
-// 🟦 Giá trị ngày trả ra ngoài
+//  Giá trị ngày trả ra ngoài
 const dateValue = ref(null)
 
-// 🟦 Mode + Format + Label (mutable)
+//  Mode + Format + Label (mutable)
 const currentMode = ref('date')
 const currentFormat = ref('DD/MM/YYYY')
 const currentLabel = ref('Ngày tháng năm')
 const currentPlaceholder = ref('dd/MM/yyyy')
 
-// 🟦 Đổi mode khi props thay đổi hoặc khi người dùng nhấn menu
+//  Đổi mode khi props thay đổi hoặc khi người dùng nhấn menu
 function setMode(mode) {
   if (mode === 'year') {
     currentMode.value = 'year'
@@ -41,14 +41,14 @@ function setMode(mode) {
   }
 }
 
-// 🟦 Áp dụng props ban đầu
+//  Áp dụng props ban đầu
 // watch(
 //   () => props.type,
 //   (value) => setMode(value),
 //   { immediate: true },
 // )
 
-// 🟦 Khi click chọn mode
+//  Khi click chọn mode
 function changeMode(mode) {
   setMode(mode)
 }
@@ -78,8 +78,6 @@ function changeMode(mode) {
       :placeholder="currentPlaceholder"
       style="width: 100%"
     />
-
-    <!-- Dropdown -->
   </div>
 </template>
 <style scoped>

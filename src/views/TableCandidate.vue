@@ -6,18 +6,23 @@
 
     <!--  Dùng component table vô -->
     <!-- Tạm thời chưa cần @edit="handleEdit" @delete="handleDelete" -->
-    <MsTable :fields="fields" :rows="rows">
+    <MsTable :fields="fields" :rows="rows" :total="rows.length">
       <!-- Header select -->
 
       <!--  Name -->
-      <template #Name="{ row, value }">
-        <div style="display: flex; flex-direction: row">
-          <strong>{{ value }}</strong>
-          <div v-if="row.IsUser" style="color: green">
-            <div class="icon-setting"></div>
-            Nhân viên
+      <template #Name="{ value }">
+        <span style="display: inline-flex; align-items: center; justify-content: center; gap: 8px">
+          <div class="avatar-warp">
+            <Avatar
+              :name="value"
+              bgColor="#1876c7"
+              color="#fff"
+              size="23"
+              style="display: inline-flex; align-items: center; gap: 8px"
+            />
           </div>
-        </div>
+          <strong>{{ value }}</strong>
+        </span>
       </template>
     </MsTable>
   </div>
@@ -25,6 +30,8 @@
 
 <script setup>
 import { ref } from 'vue'
+import Avatar from 'vue3-avatar'
+
 import MsTable from '@/components/ms-table/MsTable.vue'
 import candidate from '../data/candidate-data.json'
 // import MsButton from '@/components/ms-button/MsButton.vue'
@@ -38,7 +45,7 @@ const fields = [
   { key: 'Phone', label: 'Số điện thoại', type: 'text' },
   { key: 'Email', label: 'Email', type: 'text' },
 
-  { key: 'Campaign', label: 'Chiến dịch tuyển dụng', type: 'text' },
+  { key: 'Campaign', label: 'Chiến dịch tuyển dụng', type: 'number' },
   { key: 'Position', label: 'Vị trí tuyển dụng', type: 'text' },
   { key: 'Round', label: 'Vòng tuyển dụng', type: 'text' },
   { key: 'Rating', label: 'Đánh giá', type: 'text' },
@@ -100,4 +107,13 @@ const handleDelete = (row) => {
 
 <style scoped>
 /* TABLE  */
+/* Tắt img avt */
+:deep(.container) {
+  display: inline-block !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  height: auto !important;
+  width: auto !important;
+  background: transparent !important;
+}
 </style>

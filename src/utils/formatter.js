@@ -13,21 +13,22 @@ export const formatNumber = (value) => {
  * Hàm định dạng ngày tháng
  * @param {*} value
  * @returns
- 
+
  */
 export const formatDate = (value) => {
   if (!value) return ''
   const date = new Date(value)
-  return new Intl.DateTimeFormat().format(date)
+  if (isNaN(date.getTime())) return '' // tránh lỗi Invalid Date
+  return new Intl.DateTimeFormat('vi-VN').format(date)
 }
 
 /**
  * Hàm định dạng chuỗi
  * @param {*} value
  * @returns
- 
+
  */
 export const formatText = (value) => {
-  if (value === null || value === undefined) return ''
+  if (value === null || value === undefined) return '---'
   return String(value)
 }

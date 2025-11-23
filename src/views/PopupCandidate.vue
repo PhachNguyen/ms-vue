@@ -194,7 +194,7 @@ function saveCandidate() {
                     <ms-input
                       label="Số điện thoại"
                       name="fullName"
-                      v-model="form.fullName"
+                      v-model="form.phone"
                       placeholder="Nhập số điện thoại"
                       required
                     />

@@ -33,6 +33,7 @@ function debugClick() {
 
       <!-- <h1>Trạng thái isOpen là : {{ isOpen }}</h1> -->
     </div>
+    <!-- Header-main content -->
     <div
       class="main-content-search display-flex justify-content-space-between align-items-center flex-row"
     >
@@ -51,36 +52,17 @@ function debugClick() {
     <TableCandidate></TableCandidate>
 
     <!-- Content bottom -->
-    <div
-      class="main-content-bottom display-flex flex-row justify-content-space-between align-items-center"
-    >
-      <div class="total">Tổng: <span style="font-weight: 700">5388</span> bản ghi</div>
-      <div
-        class="bottom-right display-flex justify-content-space-between align-items-center flex-row"
-      >
-        <span class="title-pagination">Số bản ghi/trang</span>
-        <div class="pagination display-flex flex-row align-items-center">
-          <span style="padding-right: 8px">25</span>
-          <div class="icon-pagination"></div>
-        </div>
-        <div class="number-pagination display-flex">
-          <span style="padding-left: 6px">1 - 25 bàn ghi </span>
-          <div class="icon-left"></div>
-          <div class="icon-right"></div>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 
 <style scoped>
 .main-content {
+  display: flex;
+  flex-direction: column;
   /* height: 100%; */
-  /* padding: 24px; */
-  background-color: #f4f6f8;
-  /* height: calc(100vh - 48px); */
   overflow: hidden;
 }
+
 .main-content-header {
   /* font-size: 24px;
     font-weight: 700;
@@ -122,37 +104,6 @@ function debugClick() {
   margin-right: 15px;
 }
 
-.main-content-bottom {
-  font-size: 14px;
-  height: 36px;
-  padding: 24px;
-  background-color: #f5f5f5;
-  color: #394856;
-}
-.main-content-bottom .total {
-  font-weight: 700px;
-}
-.main-content-bottom .pagination {
-  padding: 7px 16px;
-  border: 0.8px;
-  background-color: #ffffff;
-}
-.main-content-bottom .title-pagination {
-  margin-right: 13px;
-  /* margin-top: 9px; */
-  font-size: 14px;
-  font-weight: 400px;
-  /* border: 1px solid gray; */
-}
-.main-content-bottom .number-pagination {
-  /* margin-top: 2px; */
-}
-.main-content-bottom .icon-dropdown {
-}
-.main-content-bottom .icon-left {
-  margin-left: 16px;
-  padding-right: 7px;
-}
 .btn-create-box {
   display: inline-flex;
 }
