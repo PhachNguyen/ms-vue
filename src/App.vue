@@ -5,7 +5,7 @@ import TheMainCotent from './layouts/TheMainCotent.vue'
 import TheSidebar from './layouts/TheSidebar.vue'
 import candidates from '@/data/candidate-data.json'
 //  Lưu vào storage
-localStorage.setItem('candidateList', JSON.stringify(candidates))
+// localStorage.setItem('candidateList', JSON.stringify(candidates))
 </script>
 
 <template>

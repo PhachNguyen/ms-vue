@@ -2,7 +2,7 @@
 <script setup>
 import { reactive, ref, watch } from 'vue'
 import MsInput from '@/components/ms-input/MsInput.vue'
-import DateModePicker from '@/components/DateModePicker.vue'
+import DateModePicker from '@/components/ms-input-date/DateModePicker.vue'
 
 //  Init một Props
 const Props = defineProps({
@@ -48,6 +48,49 @@ const gender = [
 //   gender: [{ required: true, message: 'Vui lòng chọn giới tính' }],
 //   phone: [{ required: true, message: 'Không được để trống' }],
 // }
+function saveCandidate() {
+  // 1. Lấy list từ localStorage (nếu chưa có thì mảng rỗng)
+  const list = JSON.parse(localStorage.getItem('candidateList') || '[]')
+
+  // 2. Tạo object ứng viên mới
+  const newCandidate = {
+    Id: Date.now(),
+    Name: form.fullName,
+    Phone: form.phone,
+    Email: form.email || '--',
+    Campaign: '--',
+    Position: '--',
+    Round: '--',
+    Rating: '--',
+    AppliedDate: form.applyDate || '--',
+    Referrer: '--',
+    ReceivedInfo1: '--',
+    ReceivedInfo2: '--',
+    Potential: false,
+    PortalAccount: false,
+    Tags: [],
+    Status: 'Chưa xử lý',
+    Gender: form.gender,
+    BirthDate: form.dob || '--',
+    Address: form.region,
+    RejectReason: '',
+    Collaborator: '',
+    ReceivedDate: '--',
+    ReceiveStatus: '--',
+  }
+
+  // 3. Thêm vào list
+  list.push(newCandidate)
+
+  // 4. Lưu lại
+  localStorage.setItem('candidateList', JSON.stringify(list))
+
+  // 5. Gửi sự kiện lên cha để reload bảng
+  emit('update:isOpen', false) // đóng popup
+
+  // 6. Reset form
+  Object.keys(form).forEach((key) => (form[key] = ''))
+}
 </script>
 <template>
   <div class="model">
@@ -278,7 +321,7 @@ const gender = [
                     </div>
                   </div>
 
-                  <!-- ==================== CHECKBOX ==================== -->
+                  <!--  CHECKBOX  -->
                   <div class="checkbox-row">
                     <input type="checkbox" id="fastAdd" />
                     <label for="fastAdd" style="font-size: 14px; font-weight: 500; color: #374151"
@@ -286,10 +329,10 @@ const gender = [
                     >
                   </div>
 
-                  <!-- ==================== THÊM NGƯỜI GIỚI THIỆU ==================== -->
+                  <!--  THÊM NGƯỜI GIỚI THIỆU  -->
                   <div class="add-title">+ Thêm người giới thiệu</div>
 
-                  <!-- ==================== INPUT ==================== -->
+                  <!--  INPUT  -->
                   <ms-input
                     label="Nơi làm việc gần đây"
                     name="fullName"
@@ -298,7 +341,7 @@ const gender = [
                     required
                   />
 
-                  <!-- ================== THÊM KINH NGHIỆM ================== -->
+                  <!--  THÊM KINH NGHIỆM  -->
                   <hr class="divider-pop-up" />
 
                   <div class="add-title">+ Thêm kinh nghiệm làm việc</div>
@@ -350,7 +393,7 @@ const gender = [
         <!-- BUTTON FOOTER -->
         <div class="modal-footer">
           <button type="button" class="btn-cancel">Hủy</button>
-          <button type="submit" class="btn-save">Lưu</button>
+          <button type="submit" class="btn-save" @click="saveCandidate">Lưu</button>
         </div>
       </div>
     </div>
@@ -439,7 +482,7 @@ const gender = [
   pointer-events: auto;
   transform: translate(-50%, -50%) scale(1);
 }
-/* ===== POPUP ADD (Override modal cũ) ===== */
+/* = POPUP ADD (Override modal cũ) = */
 .modal-content {
   flex: 1;
   overflow-y: auto;
@@ -579,7 +622,7 @@ const gender = [
 
 /* Nút */
 
-/* ===== Label ===== */
+/* = Label = */
 .label-input {
   font-size: 14px;
   color: #374151;
@@ -589,7 +632,7 @@ const gender = [
   display: block;
 }
 /* Chat GPT */
-/* ===== Wrapper ===== */
+/* = Wrapper = */
 .dx-input-wrapper {
   position: relative;
   display: flex;
@@ -597,7 +640,7 @@ const gender = [
   width: 100%;
 }
 
-/* ===== Input ===== */
+/* = Input = */
 .dx-input {
   width: 100%;
   height: 36px;
@@ -623,7 +666,7 @@ const gender = [
   box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.25);
 }
 
-/* ===== Icon ===== */
+/* = Icon = */
 .dx-icon {
   /* Set up thành absolute icon */
   position: absolute;

@@ -53,11 +53,13 @@
 import { formatNumber, formatDate, formatText } from '@/utils/formatter'
 
 //#region Props
+
 const props = defineProps({
   //  Thông tin header
   fields: {
     type: Array,
     required: true,
+    // Validate
     validator: (value) => {
       return value.every((field) => {
         const validTypes = ['text', 'number', 'date', 'custom', 'checkbox']
@@ -100,7 +102,7 @@ const handleFormat = (value, type) => {
       return String(value)
   }
 }
-// Handle click lưu hết all 
+// Handle click lưu hết all
 /**
  * Hàm xử lý sửa bản ghi
  * @param row
