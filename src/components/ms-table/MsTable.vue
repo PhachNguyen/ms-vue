@@ -104,7 +104,7 @@ const props = defineProps({
 //#endregion
 
 //#region Emits
-const emit = defineEmits(['edit', 'delete'])
+const emit = defineEmits(['edit', 'delete', 'reload'])
 //#endregion
 
 //#region Methods

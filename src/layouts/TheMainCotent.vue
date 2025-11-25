@@ -5,22 +5,38 @@ import AddCandidate from '@/views/AddCandidate.vue'
 import MsButton from '@/components/ms-button/MsButton.vue'
 import Form from '@/views/PopupCandidate.vue'
 
-import { ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 
 import PopupCandidate from '@/views/PopupCandidate.vue'
 
 //  Set up ban đầu là flase
 const isOpen = ref(false)
+const rows = ref([])
+
 //  Debugger
 // Done
+onMounted(() => {
+  rows.value = JSON.parse(localStorage.getItem('candidateList') || '[]')
+})
 function debugClick() {
   console.log('MainContent : đã nhận')
 }
+function loadData() {
+  debugger
+
+  rows.value = JSON.parse(localStorage.getItem('candidateList') || '[]')
+  // debugger
+  // console.log('Giá trị ' + rows.value)
+}
+
+// watch(rows, (value) => {
+//   loadData()
+// })
 </script>
 <template>
   <!-- Content -->
   <div class="main-content flex1 display-flex flex-column">
-    <PopupCandidate v-model="isOpen" />
+    <PopupCandidate v-model="isOpen" @reload="loadData" />
     <div
       class="main-content-header display-flex justify-content-space-between align-items-center flex-row"
     >
@@ -34,6 +50,7 @@ function debugClick() {
       <!-- <h1>Trạng thái isOpen là : {{ isOpen }}</h1> -->
     </div>
     <!-- Header-main content -->
+    <!-- Main-content search -->
     <div
       class="main-content-search display-flex justify-content-space-between align-items-center flex-row"
     >
@@ -42,14 +59,23 @@ function debugClick() {
         <input type="text" class="title-search" placeholder="Tìm kiếm hoặc nhờ AI trợ giúp" />
       </div>
       <div class="search-right display-flex justify-content-space-between">
-        <div class="icon-filter"></div>
-        <div class="icon-toolbar"></div>
-        <div class="icon-check"></div>
-        <div class="icon-setting-2"></div>
+        <div class="search-icon">
+          <div class="icon-filter"></div>
+        </div>
+        <div class="search-icon">
+          <div class="icon-toolbar"></div>
+        </div>
+        <div class="search-icon">
+          <div class="icon-check"></div>
+        </div>
+        <div class="search-icon">
+          <div class="icon-setting-2"></div>
+        </div>
       </div>
     </div>
+
     <!-- Table -->
-    <TableCandidate></TableCandidate>
+    <TableCandidate :rows="rows"></TableCandidate>
 
     <!-- Content bottom -->
   </div>
@@ -59,7 +85,7 @@ function debugClick() {
 .main-content {
   display: flex;
   flex-direction: column;
-  /* height: 100%; */
+  height: 100%;
   overflow: hidden;
 }
 

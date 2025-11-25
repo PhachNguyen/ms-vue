@@ -6,7 +6,7 @@
 
     <!--  Dùng component table vô -->
     <!-- Tạm thời chưa cần @edit="handleEdit" @delete="handleDelete" -->
-    <MsTable :fields="fields" :rows="rows" :total="rows.length">
+    <MsTable :fields="fields" :rows="rows">
       <!-- Header select -->
 
       <!--  Name -->
@@ -42,10 +42,10 @@ const fields = [
   // { key: 'Select', label: '', type: 'custom' }, // checkbox
   { key: 'Name', label: 'Họ và tên', type: 'custom' },
 
-  { key: 'Phone', label: 'Số điện thoại', type: 'text' },
+  { key: 'Phone', label: 'Số điện thoại', type: 'number' },
   { key: 'Email', label: 'Email', type: 'text' },
 
-  { key: 'Campaign', label: 'Chiến dịch tuyển dụng', type: 'number' },
+  { key: 'Campaign', label: 'Chiến dịch tuyển dụng', type: 'text' },
   { key: 'Position', label: 'Vị trí tuyển dụng', type: 'text' },
   { key: 'Round', label: 'Vòng tuyển dụng', type: 'text' },
   { key: 'Rating', label: 'Đánh giá', type: 'text' },
@@ -79,7 +79,14 @@ const fields = [
 
 const count = ref(0)
 //  Giá trị hàng
-const rows = ref(JSON.parse(localStorage.getItem('candidateList') || '[]'))
+// const rows = ref(JSON.parse(localStorage.getItem('candidateList') || '[]'))
+const props = defineProps({
+  rows: {
+    type: Array,
+  },
+})
+console.log(props.rows.value)
+// console.log('Giá trj row' + rows.value)
 //#endregion
 
 //#endregion

@@ -1,21 +1,33 @@
-// Luồng sự kiện từ component button emit lên maincontent -> app.vue
 <script setup>
 import { reactive, ref, watch } from 'vue'
 import MsInput from '@/components/ms-input/MsInput.vue'
 import DateModePicker from '@/components/ms-input-date/DateModePicker.vue'
 
-//  Init một Props
-const Props = defineProps({
-  isOpen: Boolean,
-})
-
-const emit = defineEmits(['update:isOpen'])
 //  Tạo model
 const model = defineModel()
+const emit = defineEmits(['reload'])
 
 function closeClick() {
   // debugger
   model.value = false
+  form.fullName = ''
+  form.dob = null
+  form.gender = null
+  form.phone = ''
+  form.region = null
+  form.email = ''
+  form.address = ''
+  form.eduLevel = ''
+  form.eduPlace = ''
+  form.major = ''
+  form.applyDate = ''
+  form.source = null
+  form.recruiter = null
+  form.partner = null
+  form.lastCompany = ''
+  form.position = ''
+  form.startTime = ''
+  form.endTime = ''
 }
 const form = reactive({
   fullName: '',
@@ -29,18 +41,36 @@ const form = reactive({
   eduPlace: '',
   major: '',
   applyDate: '',
-  source: '',
-  recruiter: '',
-  partner: '',
+  source: null,
+  recruiter: null,
+  partner: null,
   lastCompany: '',
   position: '',
   startTime: '',
   endTime: '',
 })
-// Gender
-const gender = [
-  { label: 'Nam', value: 'male' },
-  { label: 'Nữ', value: 'female' },
+// Options
+const genderOptions = [
+  { label: 'Nam', value: 'Nam' },
+  { label: 'Nữ', value: 'Nữ' },
+]
+
+const regionOptions = [
+  { label: 'Miền Bắc', value: 'Miền Bắc' },
+  { label: 'Miền Trung', value: 'Miền Trung' },
+  { label: 'Miền Nam', value: 'Miền Nam' },
+]
+
+const recruiterOptions = [
+  { label: 'HR1 - Nguyễn Thị A', value: 'hr1' },
+  { label: 'HR2 - Trần Văn B', value: 'hr2' },
+  { label: 'HR3 - Lê Thị C', value: 'hr3' },
+]
+
+const partnerOptions = [
+  { label: 'CTV A', value: 'partner_a' },
+  { label: 'CTV B', value: 'partner_b' },
+  { label: 'CTV C', value: 'partner_c' },
 ]
 
 // const rules = {
@@ -49,15 +79,17 @@ const gender = [
 //   phone: [{ required: true, message: 'Không được để trống' }],
 // }
 function saveCandidate() {
-  // 1. Lấy list từ localStorage (nếu chưa có thì mảng rỗng)
+  // debugger
+  //  Lấy list từ localStorage (nếu chưa có thì mảng rỗng)
   const list = JSON.parse(localStorage.getItem('candidateList') || '[]')
 
-  // 2. Tạo object ứng viên mới
+  //  Tạo object ứng viên mới
   const newCandidate = {
     Id: Date.now(),
     Name: form.fullName,
     Phone: form.phone,
     Email: form.email || '--',
+    // Fix sau
     Campaign: '--',
     Position: '--',
     Round: '--',
@@ -79,17 +111,19 @@ function saveCandidate() {
     ReceiveStatus: '--',
   }
 
-  // 3. Thêm vào list
-  list.push(newCandidate)
-
+  //  Thêm vào list
+  list.unshift(newCandidate)
+  // debugger
   // 4. Lưu lại
+  // debugger
   localStorage.setItem('candidateList', JSON.stringify(list))
-
-  // 5. Gửi sự kiện lên cha để reload bảng
-  emit('update:isOpen', false) // đóng popup
-
-  // 6. Reset form
   Object.keys(form).forEach((key) => (form[key] = ''))
+  // 5. Gửi sự kiện lên cha để reload bảng
+  emit('reload')
+  // debugger
+  // console.log('emit')
+  // debugger
+  model.value = false
 }
 </script>
 <template>
@@ -161,7 +195,11 @@ function saveCandidate() {
                     <!-- Nhóm label và icon -->
                     <!-- <label for="">Ngày sinh</label> -->
                     <div class="flex1">
-                      <date-mode-picker label="Ngày sinh" type="date"></date-mode-picker>
+                      <date-mode-picker
+                        label="Ngày sinh"
+                        type="date"
+                        v-model="form.dob"
+                      ></date-mode-picker>
                     </div>
 
                     <div class="form-group">
@@ -170,7 +208,7 @@ function saveCandidate() {
                         type="select"
                         v-model="form.gender"
                         placeholder="Chọn giới tính"
-                        :options="gender"
+                        :options="genderOptions"
                       />
                     </div>
                   </div>
@@ -182,10 +220,7 @@ function saveCandidate() {
                       type="select"
                       v-model="form.region"
                       placeholder="Chọn giá trị"
-                      :options="[
-                        { label: 'Nam', value: 'male' },
-                        { label: 'Nữ', value: 'female' },
-                      ]"
+                      :options="regionOptions"
                     />
                   </div>
 
@@ -196,15 +231,13 @@ function saveCandidate() {
                       name="fullName"
                       v-model="form.phone"
                       placeholder="Nhập số điện thoại"
-                      required
                     />
 
                     <ms-input
                       label="Email"
                       name="fullName"
-                      v-model="form.fullName"
+                      v-model="form.email"
                       placeholder="Nhập email"
-                      required
                     />
                   </div>
 
@@ -214,10 +247,10 @@ function saveCandidate() {
                     name="fullName"
                     v-model="form.address"
                     placeholder="Nhập địa chỉ"
-                    required
                   />
 
                   <!-- Học vấn -->
+                  <!-- Fix cứng lười sửa  -->
                   <h3 class="section-title">HỌC VẤN</h3>
 
                   <div class="form-group">
@@ -280,12 +313,9 @@ function saveCandidate() {
                       <ms-input
                         label="Nguồn ứng viên"
                         type="select"
-                        v-model="form.region"
+                        v-model="form.recruiter"
                         placeholder="Chọn giá trị"
-                        :options="[
-                          { label: 'Nam', value: 'male' },
-                          { label: 'Nữ', value: 'female' },
-                        ]"
+                        :options="partnerOptions"
                       />
                     </div>
                   </div>
@@ -297,12 +327,9 @@ function saveCandidate() {
                       <ms-input
                         label="Nhân sự khai thác"
                         type="select"
-                        v-model="form.region"
+                        v-model="form.partner"
                         placeholder="Chọn giá trị"
-                        :options="[
-                          { label: 'Nam', value: 'male' },
-                          { label: 'Nữ', value: 'female' },
-                        ]"
+                        :options="recruiterOptions"
                       />
                     </div>
 
@@ -338,7 +365,6 @@ function saveCandidate() {
                     name="fullName"
                     v-model="form.fullName"
                     placeholder="Nhập nơi làm việc gần đây"
-                    required
                   />
 
                   <!--  THÊM KINH NGHIỆM  -->
@@ -352,7 +378,6 @@ function saveCandidate() {
                     name="fullName"
                     v-model="form.fullName"
                     placeholder="Nhập nơi làm việc "
-                    required
                   />
 
                   <!-- Thời gian -->
@@ -376,7 +401,6 @@ function saveCandidate() {
                     name="fullName"
                     v-model="form.fullName"
                     placeholder="Nhập vị trí công việc "
-                    required
                   />
 
                   <!-- Mô tả -->
@@ -392,7 +416,7 @@ function saveCandidate() {
 
         <!-- BUTTON FOOTER -->
         <div class="modal-footer">
-          <button type="button" class="btn-cancel">Hủy</button>
+          <button type="button" class="btn-cancel" @click="closeClick">Hủy</button>
           <button type="submit" class="btn-save" @click="saveCandidate">Lưu</button>
         </div>
       </div>

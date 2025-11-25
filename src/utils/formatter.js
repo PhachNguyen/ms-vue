@@ -5,7 +5,7 @@
 
  */
 export const formatNumber = (value) => {
-  if (value === null || value === undefined) return ''
+  if (value === null || value === undefined) return '---'
   return new Intl.NumberFormat().format(value)
 }
 
